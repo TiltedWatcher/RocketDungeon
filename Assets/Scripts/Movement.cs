@@ -14,8 +14,7 @@ public class Movement : MonoBehaviour{
     const string BOOSTER_INPUT_KEY = "space";
     const string ROTATE_LEFT_INPUT_KEY = "a";
     const string ROTATE_RIGHT_INPUT_KEY = "d";
-    const string COLLISION_ALLOWED_TAG_ONE = "Friendly";
-    const string COLLISION_ALLOWED_TAG_TWO = "Finish";
+
 
     //cached References
     Rigidbody rocketBody;
