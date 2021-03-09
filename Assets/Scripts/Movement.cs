@@ -6,7 +6,8 @@ using UnityEngine;
 public class Movement : MonoBehaviour{
 
     //parameters
-    [SerializeField] float mainThrustStrength = 100f; 
+    [SerializeField] float mainThrustStrength = 100f;
+    [SerializeField] float rotationThrusterStrength = 10f;
 
 
     //constants
@@ -34,10 +35,14 @@ public class Movement : MonoBehaviour{
 
     private void ProcessRotation() {
         if (Input.GetKey(ROTATE_LEFT_INPUT_KEY)) {
-            Debug.Log("Rotating left");
+            ApplyRotation(rotationThrusterStrength);
         } else if (Input.GetKey(ROTATE_RIGHT_INPUT_KEY)) {
-            Debug.Log("Rotating right");
+            ApplyRotation(-rotationThrusterStrength);
         }
+    }
+
+    private void ApplyRotation(float rotationThisFrame) {
+        transform.Rotate(Vector3.forward * rotationThisFrame * Time.deltaTime);
     }
 
     private void ProcessThrust() {
