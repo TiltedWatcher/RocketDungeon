@@ -14,12 +14,16 @@ public class Movement : MonoBehaviour{
     const string BOOSTER_INPUT_KEY = "space";
     const string ROTATE_LEFT_INPUT_KEY = "a";
     const string ROTATE_RIGHT_INPUT_KEY = "d";
+    const string COLLISION_ALLOWED_TAG_ONE = "Friendly";
+    const string COLLISION_ALLOWED_TAG_TWO = "Finish";
 
     //cached References
     Rigidbody rocketBody;
+    AudioSource rocketAudio;
     
     void Start(){
         rocketBody = GetComponent<Rigidbody>();
+        rocketAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -50,7 +54,15 @@ public class Movement : MonoBehaviour{
     private void ProcessThrust() {
         if (Input.GetKey(BOOSTER_INPUT_KEY)) {
             rocketBody.AddRelativeForce(Vector3.up * mainThrustStrength * Time.deltaTime);
-            
+
+            if (!rocketAudio.isPlaying) {
+                rocketAudio.Play();
+            }
+
+        } else {
+            if (rocketAudio.isPlaying) {
+                rocketAudio.Pause();
+            }
         }
     }
 }
