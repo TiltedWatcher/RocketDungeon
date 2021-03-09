@@ -5,13 +5,20 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour{
 
+    //parameters
+    [SerializeField] float mainThrustStrength = 100f; 
+
+
+    //constants
     const string BOOSTER_INPUT_KEY = "space";
     const string ROTATE_LEFT_INPUT_KEY = "a";
     const string ROTATE_RIGHT_INPUT_KEY = "d";
 
-    // Start is called before the first frame update
+    //cached References
+    Rigidbody rocketBody;
+    
     void Start(){
-        
+        rocketBody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -22,9 +29,10 @@ public class Movement : MonoBehaviour{
     private void ProcessInput() {
         ProcessThrust();
         ProcessRotation();
+        
     }
 
-    private static void ProcessRotation() {
+    private void ProcessRotation() {
         if (Input.GetKey(ROTATE_LEFT_INPUT_KEY)) {
             Debug.Log("Rotating left");
         } else if (Input.GetKey(ROTATE_RIGHT_INPUT_KEY)) {
@@ -32,9 +40,10 @@ public class Movement : MonoBehaviour{
         }
     }
 
-    private static void ProcessThrust() {
+    private void ProcessThrust() {
         if (Input.GetKey(BOOSTER_INPUT_KEY)) {
-            Debug.Log("Thrusters engaged!");
+            rocketBody.AddRelativeForce(Vector3.up * mainThrustStrength * Time.deltaTime);
+            
         }
     }
 }
