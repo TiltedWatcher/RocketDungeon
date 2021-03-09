@@ -420,10 +420,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2525714232988661633, guid: 7742a99f1292652408430f7e8746fa12, type: 3}
-      propertyPath: m_Drag
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4309715996435214257, guid: 7742a99f1292652408430f7e8746fa12, type: 3}
       propertyPath: m_Name
       value: Rocket
