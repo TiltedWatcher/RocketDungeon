@@ -9,10 +9,10 @@ public class PlayerCollisionHandler : MonoBehaviour{
     [SerializeField] float timerBeforeRespawn = 1f;
 
     //constants
-    const string ROCKET_COLLISION_ALLOWED_TAG_ONE = "Friendly";
-    const string ROCKET_COLLISION_ALLOWED_TAG_TWO = "Finish";
-    const string ROCKET_COLLISION_ALLOWED_TAG_THREE = "Fuel";
-    const string ROCKET_COLLISION_ALLOWED_TAG_FOUR = "Powerup";
+    const string ROCKET_COLLISION_ALLOWED_TAG_HARMLESS = "Friendly";
+    const string ROCKET_COLLISION_ALLOWED_TAG_FINISH = "Finish";
+    const string ROCKET_COLLISION_ALLOWED_TAG_FUEL = "Fuel";
+    const string ROCKET_COLLISION_ALLOWED_TAG_POWERUP = "Powerup";
 
     //cached references
     SceneLoader sceneLoader;
@@ -25,28 +25,32 @@ public class PlayerCollisionHandler : MonoBehaviour{
     private void OnCollisionEnter(Collision collision) {
 
         switch (collision.gameObject.tag) {
-            case ROCKET_COLLISION_ALLOWED_TAG_ONE:
+            case ROCKET_COLLISION_ALLOWED_TAG_HARMLESS:
                 Debug.Log("Collided with something friendly");
                 break;
 
-            case ROCKET_COLLISION_ALLOWED_TAG_TWO:
-                Debug.Log("Finished the Level");
+            case ROCKET_COLLISION_ALLOWED_TAG_FINISH:
+                LevelCompleted();
                 break;
 
-            case ROCKET_COLLISION_ALLOWED_TAG_THREE:
+            case ROCKET_COLLISION_ALLOWED_TAG_FUEL:
                 Debug.Log("Collision with Fuel Pickup");
                 break;
-            case ROCKET_COLLISION_ALLOWED_TAG_FOUR:
+            case ROCKET_COLLISION_ALLOWED_TAG_POWERUP:
                 Debug.Log("Yay a powerup");
                 break;
 
             default:
                 HandleCrash();
-                
                 break;
         }
 
 
+    }
+
+    private void LevelCompleted() {
+        Debug.Log("Finished the Level");
+        sceneLoader.loadNextScene(timerBeforeRespawn);
     }
 
     private void HandleCrash() {
