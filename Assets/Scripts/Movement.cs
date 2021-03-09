@@ -42,7 +42,9 @@ public class Movement : MonoBehaviour{
     }
 
     private void ApplyRotation(float rotationThisFrame) {
+        rocketBody.freezeRotation = true; // making sure rotation is not affected by physics
         transform.Rotate(Vector3.forward * rotationThisFrame * Time.deltaTime);
+        rocketBody.freezeRotation = false; //rotation is affected by physics again
     }
 
     private void ProcessThrust() {
