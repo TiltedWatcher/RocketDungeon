@@ -33,13 +33,11 @@ public class SceneLoader : MonoBehaviour{
     }
 
     public void loadScene(int sceneIndex, float delay) {
-        Time.timeScale = 1;
         StartCoroutine(loadWithDelay(sceneIndex, delay));
     }
 
 
     public void loadScene(string sceneName, float delay) {
-        Time.timeScale = 1;
         StartCoroutine(loadWithDelay(sceneName, delay));
     }
 
@@ -69,7 +67,6 @@ public class SceneLoader : MonoBehaviour{
     }
 
     public void reloadScene(float delay) {
-        Time.timeScale = 1;
         loadScene(currentSceneIndex, delay);   
     }
 
@@ -79,7 +76,6 @@ public class SceneLoader : MonoBehaviour{
     }
 
     public void loadMainMenu(float delay) {
-        Time.timeScale = 1;
         loadScene(MAIN_MENU_NAME, delay);
     }
 
@@ -92,17 +88,19 @@ public class SceneLoader : MonoBehaviour{
     }
 
     private IEnumerator QuitWithDelay(float delay) {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSecondsRealtime(delay);
         Application.Quit();
     }
 
     private IEnumerator loadWithDelay(int sceneIndex, float secondsDelay) {
-        yield return new WaitForSeconds(secondsDelay);
+        yield return new WaitForSecondsRealtime(secondsDelay);
+        Time.timeScale = 1f;
         loadScene(sceneIndex);
     }
 
     private IEnumerator loadWithDelay(string sceneName, float secondsDelay) {
-        yield return new WaitForSeconds(secondsDelay);
+        yield return new WaitForSecondsRealtime(secondsDelay);
+        Time.timeScale = 1f;
         loadScene(sceneName);
     }
 

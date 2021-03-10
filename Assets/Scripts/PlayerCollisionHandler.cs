@@ -17,10 +17,16 @@ public class PlayerCollisionHandler : MonoBehaviour{
     //cached references
     SceneLoader sceneLoader;
 
+    //states
+    bool hasCrashed = false;
+
     private void Start() {
         sceneLoader = FindObjectOfType<SceneLoader>();
     }
 
+    private void Update() {
+
+    }
 
     private void OnCollisionEnter(Collision collision) {
 
@@ -49,14 +55,15 @@ public class PlayerCollisionHandler : MonoBehaviour{
     }
 
     private void LevelCompleted() {
-        Debug.Log("Finished the Level");
+        //TODO SFX & VFX
+        Time.timeScale = 0f;
         sceneLoader.loadNextScene(timerBeforeRespawn);
     }
 
     private void HandleCrash() {
+        //TODO SFX & VFX
+        GetComponent<PlayerMovement>().HasCrashed = true;
         Time.timeScale = 0f;
-        GetComponent<Movement>().enabled = false;
         sceneLoader.reloadScene(timerBeforeRespawn);
-        Debug.Log("BOOOOOOOOOOOOOMMMMMMM");
     }
 }
