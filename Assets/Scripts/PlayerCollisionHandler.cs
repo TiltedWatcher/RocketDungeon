@@ -7,9 +7,16 @@ public class PlayerCollisionHandler : MonoBehaviour{
 
     //parameters
     [SerializeField] float timerBeforeRespawn = 1f;
+
+    [Header("VFX")]
+    [SerializeField] ParticleSystem explosionVFX;
+    [SerializeField] ParticleSystem victoryVFX;
+
+    [Header("SFX")]
     [SerializeField] AudioClip explosionOnCrash;
-    [SerializeField] float sfxVolume = 0.6f;
     [SerializeField] AudioClip successSound;
+    [SerializeField] float sfxVolume = 0.6f;
+
 
     //constants
     const string ROCKET_COLLISION_ALLOWED_TAG_HARMLESS = "Friendly";
@@ -67,9 +74,7 @@ public class PlayerCollisionHandler : MonoBehaviour{
         transitioning = true;
         audioSource.Stop();
         audioSource.PlayOneShot(successSound, sfxVolume);
-       
-        //TODO SFX & VFX
-        //Time.timeScale = 0f;
+        var vfx = Instantiate(victoryVFX);
         sceneLoader.loadNextScene(timerBeforeRespawn);
     }
 
@@ -77,10 +82,11 @@ public class PlayerCollisionHandler : MonoBehaviour{
         //TODO SFX & VFX
         transitioning = true;
         audioSource.Stop();
+        var vfx = Instantiate(explosionVFX, transform.position, Quaternion.identity);
         AudioSource.PlayClipAtPoint(explosionOnCrash, transform.position, sfxVolume);
         GetComponent<PlayerMovement>().Transitioning = true;
-        //Time.timeScale = 0f;
         sceneLoader.reloadScene(timerBeforeRespawn);
         Destroy(gameObject);
+        Destroy(vfx, explosionVFX.main.duration + Mathf.Epsilon);
     }
 }
