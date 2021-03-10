@@ -54,6 +54,8 @@ public class PlayerCollisionHandler : MonoBehaviour{
     }
 
     private void HandleCrash() {
+        Time.timeScale = 0f;
+        GetComponent<Movement>().enabled = false;
         sceneLoader.reloadScene(timerBeforeRespawn);
         Debug.Log("BOOOOOOOOOOOOOMMMMMMM");
     }
