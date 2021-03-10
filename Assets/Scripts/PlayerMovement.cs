@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement : MonoBehaviour{
+public class PlayerMovement : MonoBehaviour{
 
     //parameters
     [SerializeField] float mainThrustStrength = 100f;
@@ -19,7 +19,14 @@ public class Movement : MonoBehaviour{
     //cached References
     Rigidbody rocketBody;
     AudioSource rocketAudio;
-    
+
+    //states
+    bool hasCrashed = false;
+
+    public bool HasCrashed {
+        set => hasCrashed = value;
+    }
+
     void Start(){
         rocketBody = GetComponent<Rigidbody>();
         rocketAudio = GetComponent<AudioSource>();
@@ -27,7 +34,14 @@ public class Movement : MonoBehaviour{
 
     // Update is called once per frame
     void Update(){
-        ProcessInput();
+        Debug.Log("This thing on?");
+        if (!hasCrashed) {
+            ProcessInput();
+        } else {
+            Debug.Log("Yo this is triggering");
+            rocketAudio.Stop();
+        }
+        
     }
 
     private void ProcessInput() {
