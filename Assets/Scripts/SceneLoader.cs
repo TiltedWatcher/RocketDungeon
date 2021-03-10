@@ -88,18 +88,18 @@ public class SceneLoader : MonoBehaviour{
     }
 
     private IEnumerator QuitWithDelay(float delay) {
-        yield return new WaitForSecondsRealtime(delay);
+        yield return new WaitForSeconds(delay);
         Application.Quit();
     }
 
     private IEnumerator loadWithDelay(int sceneIndex, float secondsDelay) {
-        yield return new WaitForSecondsRealtime(secondsDelay);
+        yield return new WaitForSeconds(secondsDelay);
         Time.timeScale = 1f;
         loadScene(sceneIndex);
     }
 
     private IEnumerator loadWithDelay(string sceneName, float secondsDelay) {
-        yield return new WaitForSecondsRealtime(secondsDelay);
+        yield return new WaitForSeconds(secondsDelay);
         Time.timeScale = 1f;
         loadScene(sceneName);
     }
