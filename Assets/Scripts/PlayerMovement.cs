@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour{
     //parameters
     [SerializeField] float mainThrustStrength = 100f;
     [SerializeField] float rotationThrusterStrength = 10f;
+    [SerializeField] AudioClip engineSound;
 
 
     //constants
@@ -21,10 +22,10 @@ public class PlayerMovement : MonoBehaviour{
     AudioSource rocketAudio;
 
     //states
-    bool hasCrashed = false;
+    bool transitioning = false;
 
-    public bool HasCrashed {
-        set => hasCrashed = value;
+    public bool Transitioning {
+        set => transitioning = value;
     }
 
     void Start(){
@@ -35,7 +36,7 @@ public class PlayerMovement : MonoBehaviour{
     // Update is called once per frame
     void Update(){
         Debug.Log("This thing on?");
-        if (!hasCrashed) {
+        if (!transitioning) {
             ProcessInput();
         } else {
             Debug.Log("Yo this is triggering");
@@ -69,7 +70,7 @@ public class PlayerMovement : MonoBehaviour{
             rocketBody.AddRelativeForce(Vector3.up * mainThrustStrength * Time.deltaTime);
 
             if (!rocketAudio.isPlaying) {
-                rocketAudio.Play();
+                rocketAudio.PlayOneShot(engineSound);
             }
 
         } else {

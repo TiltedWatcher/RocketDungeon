@@ -7,6 +7,9 @@ public class PlayerCollisionHandler : MonoBehaviour{
 
     //parameters
     [SerializeField] float timerBeforeRespawn = 1f;
+    [SerializeField] AudioClip explosionOnCrash;
+    [SerializeField] float sfxVolume = 0.6f;
+    [SerializeField] AudioClip successSound;
 
     //constants
     const string ROCKET_COLLISION_ALLOWED_TAG_HARMLESS = "Friendly";
@@ -16,12 +19,14 @@ public class PlayerCollisionHandler : MonoBehaviour{
 
     //cached references
     SceneLoader sceneLoader;
+    AudioSource audioSource;
 
     //states
-    bool hasCrashed = false;
+    bool transitioning = false;
 
     private void Start() {
         sceneLoader = FindObjectOfType<SceneLoader>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update() {
@@ -30,9 +35,12 @@ public class PlayerCollisionHandler : MonoBehaviour{
 
     private void OnCollisionEnter(Collision collision) {
 
+        if (transitioning) {
+            return;
+        }
+
         switch (collision.gameObject.tag) {
             case ROCKET_COLLISION_ALLOWED_TAG_HARMLESS:
-                Debug.Log("Collided with something friendly");
                 break;
 
             case ROCKET_COLLISION_ALLOWED_TAG_FINISH:
@@ -55,15 +63,22 @@ public class PlayerCollisionHandler : MonoBehaviour{
     }
 
     private void LevelCompleted() {
+        GetComponent<PlayerMovement>().Transitioning = true;
+        transitioning = true;
+        audioSource.PlayOneShot(successSound, sfxVolume);
+       
         //TODO SFX & VFX
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
         sceneLoader.loadNextScene(timerBeforeRespawn);
     }
 
     private void HandleCrash() {
         //TODO SFX & VFX
-        GetComponent<PlayerMovement>().HasCrashed = true;
-        Time.timeScale = 0f;
+        transitioning = true;
+        AudioSource.PlayClipAtPoint(explosionOnCrash, transform.position, sfxVolume);
+        GetComponent<PlayerMovement>().Transitioning = true;
+        //Time.timeScale = 0f;
         sceneLoader.reloadScene(timerBeforeRespawn);
+        Destroy(gameObject);
     }
 }

@@ -477,6 +477,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1514759727, guid: 7742a99f1292652408430f7e8746fa12, type: 3}
+      propertyPath: timerBeforeRespawn
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4309715996435214257, guid: 7742a99f1292652408430f7e8746fa12, type: 3}
       propertyPath: m_Name
       value: Rocket
@@ -487,11 +491,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7081362097087261367, guid: 7742a99f1292652408430f7e8746fa12, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.8
+      value: -15.29
       objectReference: {fileID: 0}
     - target: {fileID: 7081362097087261367, guid: 7742a99f1292652408430f7e8746fa12, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.72
+      value: 1.66
       objectReference: {fileID: 0}
     - target: {fileID: 7081362097087261367, guid: 7742a99f1292652408430f7e8746fa12, type: 3}
       propertyPath: m_LocalPosition.z
