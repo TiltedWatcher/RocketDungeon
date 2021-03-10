@@ -65,6 +65,7 @@ public class PlayerCollisionHandler : MonoBehaviour{
     private void LevelCompleted() {
         GetComponent<PlayerMovement>().Transitioning = true;
         transitioning = true;
+        audioSource.Stop();
         audioSource.PlayOneShot(successSound, sfxVolume);
        
         //TODO SFX & VFX
@@ -75,6 +76,7 @@ public class PlayerCollisionHandler : MonoBehaviour{
     private void HandleCrash() {
         //TODO SFX & VFX
         transitioning = true;
+        audioSource.Stop();
         AudioSource.PlayClipAtPoint(explosionOnCrash, transform.position, sfxVolume);
         GetComponent<PlayerMovement>().Transitioning = true;
         //Time.timeScale = 0f;

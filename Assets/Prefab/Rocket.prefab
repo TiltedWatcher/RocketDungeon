@@ -238,6 +238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 553d3790ce5d017418bb69d94974ab76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerBeforeRespawn: 4
+  timerBeforeRespawn: 2
   explosionOnCrash: {fileID: 8300000, guid: e77e07bb22b605147b6f1d5d3eb9529c, type: 3}
+  sfxVolume: 0.6
   successSound: {fileID: 8300000, guid: e91650b9d543bb64baf6d3d9fe2979c0, type: 3}

@@ -38,9 +38,9 @@ public class PlayerMovement : MonoBehaviour{
         Debug.Log("This thing on?");
         if (!transitioning) {
             ProcessInput();
-        } else {
+        } else{
             Debug.Log("Yo this is triggering");
-            rocketAudio.Stop();
+            //rocketAudio.Stop();
         }
         
     }
