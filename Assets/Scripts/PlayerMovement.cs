@@ -10,6 +10,11 @@ public class PlayerMovement : MonoBehaviour{
     [SerializeField] float rotationThrusterStrength = 10f;
     [SerializeField] AudioClip engineSound;
 
+    [Header("Engine Particles")]
+    [SerializeField] ParticleSystem leftEngineParticles;
+    [SerializeField] ParticleSystem rightEngineParticles;
+    [SerializeField] ParticleSystem mainEngineParticles;
+
 
     //constants
     const string BOOSTER_INPUT_KEY = "space";
@@ -54,8 +59,17 @@ public class PlayerMovement : MonoBehaviour{
     private void ProcessRotation() {
         if (Input.GetKey(ROTATE_LEFT_INPUT_KEY)) {
             ApplyRotation(rotationThrusterStrength);
+            if (!rightEngineParticles.isPlaying) {
+                rightEngineParticles.Play();
+            }
         } else if (Input.GetKey(ROTATE_RIGHT_INPUT_KEY)) {
             ApplyRotation(-rotationThrusterStrength);
+            if (!leftEngineParticles.isPlaying) {
+                leftEngineParticles.Play();
+            }
+        } else {
+            rightEngineParticles.Stop();
+            leftEngineParticles.Stop();
         }
     }
 
@@ -72,11 +86,19 @@ public class PlayerMovement : MonoBehaviour{
             if (!rocketAudio.isPlaying) {
                 rocketAudio.PlayOneShot(engineSound);
             }
+            if (!mainEngineParticles.isPlaying) {
+                mainEngineParticles.Play();
+            }
+            
 
         } else {
             if (rocketAudio.isPlaying) {
                 rocketAudio.Pause();
             }
+            if (mainEngineParticles.isPlaying) {
+                mainEngineParticles.Stop();
+            }
+            
         }
     }
 }
