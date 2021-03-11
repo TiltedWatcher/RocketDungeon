@@ -31,6 +31,15 @@ public class PlayerCollisionHandler : MonoBehaviour{
     //states
     bool transitioning = false;
 
+    //debug Modifiers
+    bool invincible;
+
+    public bool Invincible {
+        get => invincible;
+        set => invincible=value;
+    }
+
+
     private void Start() {
         sceneLoader = FindObjectOfType<SceneLoader>();
         audioSource = GetComponent<AudioSource>();
@@ -45,6 +54,7 @@ public class PlayerCollisionHandler : MonoBehaviour{
         if (transitioning) {
             return;
         }
+
 
         switch (collision.gameObject.tag) {
             case ROCKET_COLLISION_ALLOWED_TAG_HARMLESS:
@@ -62,6 +72,9 @@ public class PlayerCollisionHandler : MonoBehaviour{
                 break;
 
             default:
+                if (invincible) {
+                    break;
+                }
                 HandleCrash();
                 break;
         }
@@ -69,16 +82,16 @@ public class PlayerCollisionHandler : MonoBehaviour{
 
     }
 
-    private void LevelCompleted() {
+    public void LevelCompleted() {
         GetComponent<PlayerMovement>().Transitioning = true;
         transitioning = true;
         audioSource.Stop();
         audioSource.PlayOneShot(successSound, sfxVolume);
-        var vfx = Instantiate(victoryVFX);
+        var vfx = Instantiate(victoryVFX, transform);
         sceneLoader.loadNextScene(timerBeforeRespawn);
     }
 
-    private void HandleCrash() {
+    public void HandleCrash() {
         //TODO SFX & VFX
         transitioning = true;
         audioSource.Stop();
