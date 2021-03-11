@@ -50,6 +50,17 @@ public class PlayerMovement : MonoBehaviour{
         
     }
 
+    private void ProcessThrust() {
+        if (Input.GetKey(BOOSTER_INPUT_KEY)) {
+
+            StartThrusters();
+
+        } else {
+            StopThrusting();
+
+        }
+    }
+
     private void ProcessInput() {
         ProcessThrust();
         ProcessRotation();
@@ -58,20 +69,39 @@ public class PlayerMovement : MonoBehaviour{
 
     private void ProcessRotation() {
         if (Input.GetKey(ROTATE_LEFT_INPUT_KEY)) {
-            ApplyRotation(rotationThrusterStrength);
-            if (!rightEngineParticles.isPlaying) {
-                rightEngineParticles.Play();
-            }
+
+            RotateLeft();
+
         } else if (Input.GetKey(ROTATE_RIGHT_INPUT_KEY)) {
-            ApplyRotation(-rotationThrusterStrength);
-            if (!leftEngineParticles.isPlaying) {
-                leftEngineParticles.Play();
-            }
+
+            RotateRight();
+
         } else {
-            rightEngineParticles.Stop();
-            leftEngineParticles.Stop();
+
+            StopRotation();
+
         }
     }
+
+    private void RotateLeft() {
+        ApplyRotation(rotationThrusterStrength);
+        if (!rightEngineParticles.isPlaying) {
+            rightEngineParticles.Play();
+        }
+    }
+
+    private void RotateRight() {
+        ApplyRotation(-rotationThrusterStrength);
+        if (!leftEngineParticles.isPlaying) {
+            leftEngineParticles.Play();
+        }
+    }
+
+    private void StopRotation() {
+        rightEngineParticles.Stop();
+        leftEngineParticles.Stop();
+    }
+
 
     private void ApplyRotation(float rotationThisFrame) {
         rocketBody.freezeRotation = true; // making sure rotation is not affected by physics
@@ -79,26 +109,25 @@ public class PlayerMovement : MonoBehaviour{
         rocketBody.freezeRotation = false; //rotation is affected by physics again
     }
 
-    private void ProcessThrust() {
-        if (Input.GetKey(BOOSTER_INPUT_KEY)) {
-            rocketBody.AddRelativeForce(Vector3.up * mainThrustStrength * Time.deltaTime);
 
-            if (!rocketAudio.isPlaying) {
-                rocketAudio.PlayOneShot(engineSound);
-            }
-            if (!mainEngineParticles.isPlaying) {
-                mainEngineParticles.Play();
-            }
-            
+    private void StopThrusting() {
+        if (rocketAudio.isPlaying) {
+            rocketAudio.Pause();
+        }
+        if (mainEngineParticles.isPlaying) {
+            mainEngineParticles.Stop();
+        }
+    }
 
-        } else {
-            if (rocketAudio.isPlaying) {
-                rocketAudio.Pause();
-            }
-            if (mainEngineParticles.isPlaying) {
-                mainEngineParticles.Stop();
-            }
-            
+    private void StartThrusters() {
+
+        rocketBody.AddRelativeForce(Vector3.up * mainThrustStrength * Time.deltaTime);
+
+        if (!rocketAudio.isPlaying) {
+            rocketAudio.PlayOneShot(engineSound);
+        }
+        if (!mainEngineParticles.isPlaying) {
+            mainEngineParticles.Play();
         }
     }
 }
